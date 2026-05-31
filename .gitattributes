@@ -39,6 +39,9 @@
 # behavior for image files
 #
 # image files are treated as binary by default.
+
+*.cshtml linguist-language=C#
+
 ###############################################################################
 #*.jpg   binary
 #*.png   binary
