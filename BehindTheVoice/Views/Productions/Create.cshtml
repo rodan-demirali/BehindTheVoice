@@ -1,0 +1,187 @@
+﻿@model BehindTheVoice.ViewModels.ProductionCreateViewModel
+
+@{
+    ViewData["Title"] = "Yeni Yapım Ekle";
+}
+
+<!-- Mavi focus çerçevesini ezen stil bloğu -->
+<style>
+    input:focus, select:focus, textarea:focus, .form-control:focus {
+        outline: none !important; /* Tarayıcının varsayılan sert mavi çizgisini kaldırır */
+        border-color: #a0a0a0 !important; /* Tıklandığında kenarlığı yumuşak bir gri yapar */
+        box-shadow: 0 0 5px rgba(0,0,0,0.15) !important; /* Etrafına çok hafif, zarif bir gölge verir */
+    }
+
+    .animated-button {
+        border: 2px solid gray;
+        width: 140px;
+        height: auto;
+        float: left;
+        transition: .5s linear;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        padding: 15px;
+        text-align: center;
+        margin: 0 5px;
+        background: transparent;
+        text-transform: uppercase;
+        font-weight: 900;
+    }
+
+        .animated-button:before {
+            position: absolute;
+            content: '';
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            width: 100%;
+            border-bottom: 4px solid transparent;
+            border-left: 4px solid transparent;
+            box-sizing: border-box;
+            transform: translateX(100%);
+        }
+
+        .animated-button:after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            border-top: 4px solid transparent;
+            border-right: 4px solid transparent;
+            box-sizing: border-box;
+            transform: translateX(-100%);
+        }
+
+    .btnAccept:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            background-color: rgb(136, 247, 119);
+        }
+
+    .animated-button:hover:before {
+        border-color: #262626;
+        height: 100%;
+        background-color: transparent;
+        transform: translateX(0);
+        transition: .3s transform linear, .3s height linear .3s;
+    }
+
+    .animated-button:hover:after {
+        border-color: #262626;
+        height: 100%;
+        transform: translateX(0);
+        transition: .3s transform linear, .3s height linear .5s;
+    }
+
+    button {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        background: transparent;
+    }
+
+    .btnCancel:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        background-color: rgb(250, 127, 127);
+    }
+
+</style>
+
+<div style="max-width: 900px; margin: 40px auto; font-family: Arial, sans-serif; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    
+    <h2 style="color: #2b5e73; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 25px;">
+        Yeni Yapım Ekle
+    </h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 20px;">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Yapım Adı</label>
+                <input asp-for="Title" type="text" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required />
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Yapım Türü</label>
+                <select asp-for="Type" asp-items="Html.GetEnumSelectList<BehindTheVoice.Models.ProductionType>()" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required>
+                    <option value="">Lütfen Bir Tür Seçiniz...</option>
+                </select>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Yayın Tarihi</label>
+                <input asp-for="ReleaseDate" type="date" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required />
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Stüdyo</label>
+                <input asp-for="Studio" type="text" placeholder="Örn: DreamWorks, Disney" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Süre (Dakika)</label>
+                <input asp-for="Runtime" type="number" placeholder="Örn: 120" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Orijinal Dil</label>
+                <input asp-for="OriginalLanguage" type="text" placeholder="Örn: English, Japanese" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+            </div>
+
+        </div>
+
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 6px; border: 1px solid #eee; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Seri / Evren (Franchise)</label>
+                <select asp-for="FranchiseId" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">-- Bağımsız Yapım (Seri Değil) --</option>
+                    @if (ViewBag.Franchises != null)
+                    {
+                        foreach (var franchise in ViewBag.Franchises)
+                        {
+                            <option value="@franchise.Id">@franchise.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; margin-bottom: 5px; display: block;">Türler (Çoklu Seçim İçin CTRL'ye Basılı Tutun)</label>
+                <select asp-for="SelectedGenreIds" multiple style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; height: 90px;">
+                    @if (ViewBag.Genres != null)
+                    {
+                        foreach (var genre in ViewBag.Genres)
+                        {
+                            <option value="@genre.Id">@genre.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+        </div>
+
+        <div>
+            <label style="font-weight: bold; margin-bottom: 5px; display: block;">Açıklama / Özet</label>
+            <textarea asp-for="Description" rows="4" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        </div>
+
+        <div style="background-color: #fff3cd; padding: 15px; border: 1px dashed #ffeeba; border-radius: 5px;">
+            <label style="font-weight: bold; margin-bottom: 5px; display: block;">Yapım Afişi (Poster)</label>
+            <input asp-for="PosterImage" accept="image/*" type="file" required />
+        </div>
+
+        <div style="margin-top: 10px; display: flex; align-items: center; gap: 15px;">
+            <button type="submit" class="animated-button btnAccept">
+                Yapımı Kaydet
+            </button>
+            <a asp-action="Index" asp-controller="Admin" style="color: black; text-decoration: none; width:160px;" class="animated-button btnCancel">İptal Et ve Geri Dön</a>
+        </div>
+    
+    </form>
+</div>

@@ -1,0 +1,24 @@
+﻿@model BehindTheVoice.Models.Franchise
+
+@{
+    ViewData["Title"] = "Yeni Seri Ekle";
+}
+
+<div style="max-width: 500px; margin: 50px auto; font-family: Arial, sans-serif;">
+    <h2 style="color: #2b5e73; border-bottom: 2px solid #ddd; padding-bottom: 10px; margin-bottom: 20px;">Yeni Seri (Franchise) Ekle</h2>
+    
+    <form asp-action="Create" method="post" style="display: flex; flex-direction: column; gap: 15px;">
+        <div>
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">Seri / Evren Adı</label>
+            <input asp-for="Name" type="text" placeholder="Örn: Kung Fu Panda Universe" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" required />
+        </div>
+        <div>
+            <label style="font-weight: bold; display: block; margin-bottom: 5px;">Açıklama (Opsiyonel)</label>
+            <textarea asp-for="Description" rows="3" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+        </div>
+        <div style="margin-top: 10px;">
+            <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;">Seriyi Kaydet</button>
+            <a asp-controller="Admin" asp-action="Index" style="margin-left: 15px; color: gray; text-decoration: none;">İptal Et</a>
+        </div>
+    </form>
+</div>

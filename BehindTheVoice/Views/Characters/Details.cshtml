@@ -1,0 +1,123 @@
+﻿@model BehindTheVoice.Models.Character
+
+@{
+    ViewData["Title"] = Model.Name + " - Behind The Voice";
+}
+
+<div class="char-container">
+
+    <div class="char-header-box">
+
+        <div>
+            @{
+                string currentMovieSlug = ViewContext.RouteData.Values["productionTitle"]?.ToString();
+                string currentMovieName = currentMovieSlug?.Replace("_", " ").Replace("-", "/");
+
+                var specificCast = Model.VoiceCasts?.FirstOrDefault(vc => vc.Production != null && vc.Production.Title == currentMovieName);
+                string displayImage = specificCast?.CharacterAppearanceUrl ?? Model.ImageUrl;
+            }
+            <img src="@Url.Content(displayImage ?? "~/images/userphoto.png")" class="char-poster" alt="@Model.Name" />
+        </div>
+
+        <div style="flex: 1;">
+            <h1 class="char-title">@Model.Name</h1>
+
+            @{
+                var turkceSeslendirmeler = Model.VoiceCasts?
+                                                .Where(vc => vc.LanguageCode == "TR")
+                                                .ToList();
+            }
+
+            @if (turkceSeslendirmeler != null && turkceSeslendirmeler.Any())
+            {
+                var turkishVoiceActors = string.Join(", ", turkceSeslendirmeler.Select(vc => vc.VoiceActor.FullName).Distinct());
+                <div class="char-info-text">
+                    <strong>@Model.Name</strong> karakterini Türkçe <strong>@turkishVoiceActors</strong> seslendirmiştir.
+                </div>
+            }
+            else
+            {
+                <div class="char-info-text" style="color: var(--text-muted); font-style: italic; border-left-color: var(--border-color);">
+                    <strong>@Model.Name</strong> karakterinin Türkçe seslendirmen bilgisi eklenmemiş.
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="char-section-title">@Model.Name SESLERİ</div>
+
+    <div class="char-grid">
+
+        @if (Model.VoiceCasts != null && Model.VoiceCasts.Any())
+        {
+            var distinctVoiceActors = Model.VoiceCasts
+                .GroupBy(v => v.VoiceActor.Id)
+                .Select(g => g.First());
+
+            foreach (var cast in distinctVoiceActors)
+            {
+                string actorUrlName = cast.VoiceActor.FullName.Replace(" ", "_");
+
+                <div class="char-grid-card">
+                    <div class="char-grid-img-wrapper">
+                        <a asp-controller="VoiceActors" asp-action="Details" asp-route-name="@actorUrlName">
+                            <img src="@Url.Content(cast.VoiceActor.ImageUrl ?? "~/images/userphoto.png")" alt="@cast.VoiceActor.FullName" />
+                        </a>
+                        <div class="badge-lang">@cast.LanguageCode</div>
+                    </div>
+
+                    <a asp-controller="VoiceActors" asp-action="Details" asp-route-name="@actorUrlName" class="char-grid-link">
+                        @cast.VoiceActor.FullName
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="grid-column: 1 / -1; color: var(--text-muted); font-style: italic;">
+                Bu karakter için henüz seslendirmen eklenmemiş.
+            </div>
+        }
+
+    </div>
+
+    <div class="char-section-title">KARAKTERİN YER ALDIĞI YAPIMLAR</div>
+
+    <div class="char-grid">
+
+        @if (Model.VoiceCasts != null && Model.VoiceCasts.Any())
+        {
+            var distinctProductions = Model.VoiceCasts
+                .GroupBy(v => v.ProductionId)
+                .Select(g => g.First().Production);
+
+            foreach (var film in distinctProductions)
+            {
+                string filmUrlName = film.Title.Replace(" ", "_").Replace("/", "-");
+                ProductionType sType = film.Type;
+
+                <div class="char-grid-card">
+                    <div class="char-grid-img-wrapper">
+                        <a asp-controller="Productions" asp-action="Details" asp-route-type="@sType" asp-route-title="@filmUrlName">
+                            <img src="@Url.Content(film.PosterUrl ?? "~/images/moviePosterPlaceholder.png")" alt="@film.Title" />
+                        </a>
+                        <div class="badge-type">@film.Type</div>
+                    </div>
+
+                    <a asp-controller="Productions" asp-action="Details" asp-route-type="@sType" asp-route-title="@filmUrlName" class="char-grid-link">
+                        @film.Title
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="grid-column: 1 / -1; color: var(--text-muted); font-style: italic;">
+                Bu karakter için henüz bir yapım eklenmemiş.
+            </div>
+        }
+
+    </div>
+
+</div>

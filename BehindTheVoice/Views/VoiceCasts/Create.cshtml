@@ -1,0 +1,93 @@
+﻿@model BehindTheVoice.ViewModels.VoiceCastCreateViewModel
+
+@{
+    ViewData["Title"] = "Kadro Eşleştir";
+}
+
+<div class="form-container">
+
+    <div class="section-header">Kadro Eşleştir (Yeni Voice Cast)</div>
+
+    <div class="box-container">
+        <p class="form-desc">
+            Önceden eklediğiniz Aktör, Karakter ve Yapım bilgilerini buradan birbirine bağlayarak seslendirme kaydı oluşturabilirsiniz.
+        </p>
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+            <div class="form-row-3">
+                <div class="form-group">
+                    <label class="form-label">Yapım</label>
+                    <select asp-for="ProductionId" class="form-control" required>
+                        <option value="">-- Yapım Seç --</option>
+                        @if (ViewBag.Productions != null)
+                        {
+                            foreach (var prod in ViewBag.Productions)
+                            {
+                                <option value="@prod.Id">@prod.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Karakter</label>
+                    <select asp-for="CharacterId" class="form-control" required>
+                        <option value="">-- Karakter Seç --</option>
+                        @if (ViewBag.Characters != null)
+                        {
+                            foreach (var c in ViewBag.Characters)
+                            {
+                                <option value="@c.Id">@c.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Seslendirmen</label>
+                    <select asp-for="VoiceActorId" class="form-control" required>
+                        <option value="">-- Aktör Seç --</option>
+                        @if (ViewBag.VoiceActors != null)
+                        {
+                            foreach (var actor in ViewBag.VoiceActors)
+                            {
+                                <option value="@actor.Id">@actor.FullName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row-2">
+                <div class="form-group">
+                    <label class="form-label">Seslendirme Dili</label>
+                    <select asp-for="LanguageCode" class="form-control" required>
+                        <option value="TR">TR - Türkçe</option>
+                        <option value="EN">EN - İngilizce</option>
+                        <option value="JP">JP - Japonca</option>
+                        <option value="FR">FR - Fransızca</option>
+                        <option value="DE">DE - Almanca</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-file-box">
+                    <label class="form-label">Yapıma Özel Görünüm (Opsiyonel)</label>
+                    <small>
+                        Karakterin bu yapımdaki hali farklıysa (örneğin yaşlanmışsa) spesifik bir resim yükleyebilirsiniz. Aksi halde karakterin varsayılan resmi kullanılır.
+                    </small>
+                    <input asp-for="CharacterAppearanceImage" accept="image/*" type="file" style="font-size: 13px;" />
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    Kadroya Ekle
+                </button>
+                <a asp-action="Index" asp-controller="Admin" class="btn-cancel">İptal Et ve Geri Dön</a>
+            </div>
+
+        </form>
+    </div>
+
+</div>

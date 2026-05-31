@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BehindTheVoice</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BehindTheVoice.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @{
+        // Bulunduğumuz Controller adını dinamik olarak alıyoruz
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    }
+
+    <!-- Header'ı tam genişlikte yaymak için kendi class'ımızı koruyoruz -->
+    <header style="display:flex; justify-content: space-evenly;">
+
+        <div class="site-header">
+            <div class="top-bar">
+                <div class="brand">
+                    <a asp-controller="Home" asp-action="Index" class="brand-logo">Behind The Voice</a>
+                </div>
+
+                <div class="search-container">
+                    <a class="btn-action" asp-controller="Admin" asp-action="Index">Ekle</a>
+
+                    <select id="slctType">
+                        <option value="voiceactors">Voice Actors</option>
+                        <option value="movies">Movies</option>
+                        <option value="characters">Characters</option>
+                        <option value="tvshows">TV Shows</option>
+                    </select>
+
+                    <input id="txtSearch" type="text" placeholder="Search..." />
+                    <input id="btnSearch" class="btn-action" type="button" value="Search" />
+                </div>
+            </div>
+
+            <div class="main-nav-wrapper">
+                <nav class="main-nav">
+                    <!-- Eğer bulunduğumuz Controller "VoiceActors" ise 'active-nav' class'ı eklenir -->
+                    <a asp-controller="VoiceActors" asp-action="Index"
+                       class="@(currentController == "VoiceActors" ? "active-nav" : "")">Voice Actors</a>
+
+                    <a asp-controller="Characters" asp-action="Index"
+                       class="@(currentController == "Characters" ? "active-nav" : "")">Characters</a>
+
+                    <a asp-controller="Productions" asp-action="Index"
+                       class="@(currentController == "Productions" ? "active-nav" : "")">Productions</a>
+
+                    <!-- JS ile çalışıyorsa veya başka bir sayfaya gidecekse aynı mantığı buraya da kurabilirsiniz -->
+                    <input id="btnMovies" type="button" value="Movies"
+                           class="@(currentController == "Movies" ? "active-nav" : "")" />
+
+                    <input id="btnTVShows" type="button" value="TV Shows"
+                           class="@(currentController == "TVShows" ? "active-nav" : "")" />
+                </nav>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @*
+    <footer class="border-top footer text-muted mt-5 py-3">
+        <div class="container text-center">
+            &copy; 2026 - BehindTheVoice - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

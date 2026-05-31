@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BehindTheVoice.Models.VoiceActor>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="home-recently-updated">
+    
+    <div>
+        <div class="section-header">Recently Updated Voice Actors</div>
+        <div class="box-container">
+            @{
+                var recentActors = ViewBag.RecentActors as IEnumerable<BehindTheVoice.Models.VoiceActor>;
+            }
+            <table class="recently-updated-table">
+                @if(recentActors != null)
+                {
+                    int iSayac = 0;
+                    foreach (var actor in recentActors)
+                    {
+                        if(iSayac % 2 == 0)
+                        {
+                            @:<tr>
+                        }
+                        <td>
+                            @{ string sUrlName = actor.FullName.Replace(" ", "_"); }
+                            <a class="grid-item-link" asp-controller="VoiceActors" asp-action="Details" asp-route-name="@sUrlName">
+                                <img src="@Url.Content(actor.ImageUrl ?? "~/images/userphoto.png")" />
+                                <label>@actor.FullName</label>
+                            </a>
+                        </td>
+                        if(iSayac % 2 != 0)
+                        {
+                            @:</tr>
+                        }
+                        iSayac++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <div class="section-header">Recently Updated Movies</div>
+        <div class="box-container">
+            @{
+                var recentMovies = ViewBag.RecentMovies as IEnumerable<BehindTheVoice.Models.Production>;
+            }
+            <table class="recently-updated-table">
+                @if (recentMovies != null)
+                {
+                    int movSayac = 0;
+                    foreach (var movie in recentMovies)
+                    {
+                        if (movSayac % 2 == 0)
+                        {
+                            @:<tr>
+                        }
+                        <td>
+                            @{
+                                string sUrlMovieName = movie.Title.Replace(" ", "_");
+                                ProductionType sType = movie.Type;
+                            }
+                            <a class="grid-item-link" asp-controller="Productions" asp-action="Details" asp-route-type="@sType" asp-route-title="@sUrlMovieName">
+                                <img src="@Url.Content(movie.PosterUrl ?? "~/images/moviePosterPlaceholder.png")" />
+                                <label>@movie.Title</label>
+                            </a>
+                        </td>
+                        if(movSayac % 2 != 0)
+                        {
+                            @:</tr>
+                        }
+                        movSayac++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <div class="section-header">Recently Updated Characters</div>
+        <div class="box-container">
+            @{
+                var recentCharacters = ViewBag.RecentCharacters as IEnumerable<BehindTheVoice.Models.VoiceCast>;
+            }
+            <table class="recently-updated-table">
+                @if (recentCharacters != null)
+                {
+                    int charSayac = 0;
+                    foreach (var character in recentCharacters)
+                    {
+                        if (charSayac % 2 == 0)
+                        {
+                            @:<tr>
+                        }
+                        <td>
+                            @{
+                                string sUrlCharacterName = character.Character.Name.Replace(" ", "_");
+                                string sTitleName = character.Production.Title.Replace(" ", "_");
+                            }
+                            <a class="grid-item-link" asp-controller="Characters" asp-action="Details" asp-route-productionTitle="@sTitleName" asp-route-name="@sUrlCharacterName">
+                                <img src="@Url.Content(character.CharacterAppearanceUrl ?? "~/images/userphoto.png")" />
+                                <label>@character.Character.Name</label>
+                                <small>@character.Production.Title</small>
+                            </a>
+                        </td>
+                        if(charSayac % 2 != 0)
+                        {
+                            @:</tr>
+                        }
+                        charSayac++;
+                    }
+                }
+            </table>
+        </div>
+    </div>
+
+</div>

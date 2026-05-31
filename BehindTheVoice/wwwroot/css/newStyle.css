@@ -1,0 +1,207 @@
+﻿/* =========================================
+   BEHIND THE VOICE - KLASIK DB TEMASI
+   ========================================= */
+
+:root {
+    --bg-main: #f3f4f6; /* Arka plan rengi */
+    --box-bg: #ffffff; /* Kutu arka planları */
+    --border-color: #d1d5db; /* Klasik, ince kenarlık rengi */
+    --header-bg: #1f2937; /* Başlıklar için tok bir koyu gri/lacivert */
+    --header-text: #ffffff;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --link-color: #2563eb;
+    --link-hover: #1d4ed8;
+    --accent-color: #f59e0b; /* Yıldız/Favori gibi alanlar için vurgu rengi */
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+        color: var(--link-hover);
+    }
+
+/* --- Sayfa Genel Düzeni --- */
+.page-layout {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start;
+}
+
+/* Ana İçerik ve Yan Menü Genişlikleri */
+.main-content {
+    flex: 2;
+}
+
+.sidebar {
+    flex: 1;
+    max-width: 350px;
+}
+
+/* --- Başlıklar ve Kutular (Klasik DB Görünümü) --- */
+.section-header {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 3px 3px 0 0;
+}
+
+.box-container {
+    background-color: var(--box-bg);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    padding: 15px;
+    border-radius: 0 0 3px 3px;
+    margin-bottom: 25px;
+}
+
+/* --- Recently Updated Tabloları --- */
+.recently-updated-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .recently-updated-table td {
+        padding: 10px;
+        text-align: center;
+        vertical-align: top;
+        width: 33.33%;
+    }
+
+.grid-item-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-main);
+}
+
+    .grid-item-link:hover {
+        text-decoration: none;
+    }
+
+    .grid-item-link img {
+        width: 80px;
+        height: 115px;
+        object-fit: cover;
+        border: 1px solid var(--border-color);
+        border-radius: 2px;
+        margin-bottom: 8px;
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.05); /* Çok hafif, doğal bir gölge */
+    }
+
+    .grid-item-link label {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 2px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .grid-item-link small {
+        font-size: 11px;
+        color: var(--text-muted);
+        text-align: center;
+    }
+
+/* --- Listeleme (List By) Alanı --- */
+.list-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+    .list-controls select {
+        padding: 5px 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 3px;
+        font-size: 13px;
+    }
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+    .list-item:last-child {
+        border-bottom: none;
+    }
+
+.list-item-info {
+    display: flex;
+    gap: 15px;
+}
+
+    .list-item-info .vcImg img {
+        width: 65px;
+        height: 95px;
+        object-fit: cover;
+        border: 1px solid var(--border-color);
+        border-radius: 2px;
+    }
+
+.list-item-text label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--link-color);
+    margin-bottom: 5px;
+}
+
+.list-item-text .desc {
+    font-size: 13px;
+    color: var(--text-main);
+    line-height: 1.4;
+    max-width: 500px;
+}
+
+.list-item-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 120px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    /*justify-content: flex-end;*/
+    gap: 5px;
+}
+
+/* --- Ana Sayfa Container --- */
+.home-recently-updated {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+    .home-recently-updated > div {
+        flex: 1;
+        min-width: 300px;
+    }

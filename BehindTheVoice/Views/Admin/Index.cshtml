@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Admin Paneli";
+}
+
+<div class="admin-container">
+
+    <!-- Üst Başlık ve Açıklama Kutusu -->
+    <div class="section-header">Yönetim Paneli (Admin Dashboard)</div>
+@*     <div class="box-container" style="margin-bottom: 10px;">
+        <p style="margin: 0; color: var(--text-muted); font-size: 14px;">
+            Veritabanına eklemek istediğiniz kayıt türünü aşağıdaki menüden seçebilirsiniz.
+        </p>
+    </div>
+ *@
+
+    <!-- İşlem Butonları (Grid Menü) -->
+    <div class="admin-grid">
+
+        <a asp-controller="VoiceActors" asp-action="Create" class="admin-action-card">
+            <strong>Yeni Seslendirmen</strong>
+            <small>Veritabanına yeni bir aktör veya aktris profili ekle.</small>
+        </a>
+
+        <a asp-controller="Characters" asp-action="Create" class="admin-action-card">
+            <strong>Yeni Karakter</strong>
+            <small>Sisteme yeni bir kurgusal karakter tanımla.</small>
+        </a>
+
+        <a asp-controller="Productions" asp-action="Create" class="admin-action-card">
+            <strong>Yeni Yapım</strong>
+            <small>Film, Dizi veya Video Oyunu bilgilerini gir.</small>
+        </a>
+
+        <a asp-controller="Genres" asp-action="Create" class="admin-action-card">
+            <strong>Yeni Genre</strong>
+            <small>Yapımlar için yeni bir tür (Aksiyon, Komedi vb.) oluştur.</small>
+        </a>
+
+        <a asp-controller="Franchises" asp-action="Create" class="admin-action-card">
+            <strong>Yeni Franchise</strong>
+            <small>Bağlantılı yapımlar için bir seri veya evren (örn: Marvel) ekle.</small>
+        </a>
+
+        <!-- Kadro eşleştirme en önemli işlem olduğu için rengini yeşil ile ayırdık -->
+        <a asp-controller="VoiceCasts" asp-action="Create" class="admin-action-card" style="border-left-color: #10b981;">
+            <strong>Kadro Eşleştir (Cast)</strong>
+            <small>Aktör, Karakter ve Yapımı birleştirerek seslendirme verisini kaydet.</small>
+        </a>
+
+    </div>
+
+</div>

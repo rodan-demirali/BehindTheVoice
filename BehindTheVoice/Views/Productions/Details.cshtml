@@ -1,0 +1,146 @@
+﻿@model BehindTheVoice.Models.Production
+
+@{
+    ViewData["Title"] = Model.Title + " - Behind The Voice";
+
+    string genreList = Model.Genres != null && Model.Genres.Any()
+        ? string.Join(", ", Model.Genres.Select(g => g.Name))
+        : "Tür Belirtilmemiş";
+}
+
+<div class="prod-container">
+
+    <div class="prod-header-box">
+        <div>
+            <img class="prod-poster" src="@Url.Content(Model.PosterUrl ?? "~/images/moviePosterPlaceholder.png")" alt="@Model.Title" />
+        </div>
+
+        <div class="prod-info">
+            <h1 class="prod-title">
+                @Model.Title 
+                @if (Model.ReleaseDate.Year > 1)
+                {
+                    <span>(@Model.ReleaseDate.Year)</span>
+                }
+            </h1>
+
+            <div class="prod-subtitle">@Model.Type | @genreList</div>
+
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <p class="prod-desc">
+                    @Model.Description
+                </p>
+            }
+            else
+            {
+                <p class="prod-desc" style="color: #999; font-style: italic;">
+                    Bu yapım için henüz bir açıklama girilmemiş.
+                </p>
+            }
+
+                @if (Model.ReleaseDate.Year > 1)
+                {
+                    <div class="prod-info-row">
+                        <span class="prod-info-label">İlk Yayın:</span>
+                        @Model.ReleaseDate.ToString("d MMMM yyyy")
+                    </div>
+                }
+
+            @if (!string.IsNullOrEmpty(Model.Studio))
+            {
+                <div class="prod-info-row">
+                    <span class="prod-info-label">Stüdyo:</span> @Model.Studio
+                </div>
+            }
+
+            @if (Model.Runtime.HasValue)
+            {
+                <div class="prod-info-row">
+                    <span class="prod-info-label">Süre:</span> @Model.Runtime dk
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.OriginalLanguage))
+            {
+                <div class="prod-info-row">
+                    <span class="prod-info-label">Orijinal Dil:</span> @Model.OriginalLanguage
+                </div>
+            }
+
+            @if (Model.Franchise != null)
+            {
+                <div class="prod-info-row">
+                    <span class="prod-info-label">Seri:</span>
+                    <a href="#" class="btva-link">@Model.Franchise.Name</a>
+                </div>
+            }
+
+            <div class="prod-info-row"><span class="prod-info-label">Durum:</span> Verified Credits</div>
+        </div>
+    </div>
+
+    <div class="prod-tabs">
+        <span>KADRO</span> | ANKET | SES KARŞILAŞTIRMALARI | TARTIŞMA
+    </div>
+
+    <div class="prod-section-title">
+        THE <em>@Model.Title</em> CAST
+    </div>
+
+    <div class="cast-grid">
+        @if (Model.VoiceCasts != null && Model.VoiceCasts.Any())
+        {
+            foreach (var cast in Model.VoiceCasts)
+            {
+                string actorUrlName = cast.VoiceActor.FullName.Replace(" ", "_");
+                string charUrlName = cast.Character.Name.Replace(" ", "_");
+                string prodUrlName = Model.Title.Replace(" ", "_").Replace("/", "-");
+
+                string charImage = cast.CharacterAppearanceUrl ?? cast.Character.ImageUrl;
+
+                <div class="cast-card">
+
+                    <div class="card-images">
+                        <div class="char-side">
+                            <a asp-controller="Characters" asp-action="Details" asp-route-productionTitle="@prodUrlName" asp-route-name="@charUrlName">
+                                <img src="@Url.Content(charImage ?? "~/images/userphoto.png")" alt="@cast.Character.Name" />
+                            </a>
+                            <div class="verified-check">✓</div>
+                        </div>
+
+                        <div class="actor-side">
+                            <a asp-controller="VoiceActors" asp-action="Details" asp-route-name="@actorUrlName">
+                                <img src="@Url.Content(cast.VoiceActor.ImageUrl ?? "~/images/userphoto.png")" alt="@cast.VoiceActor.FullName" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-names">
+                        <div class="char-name-side">
+                            <a class="btva-link" asp-controller="Characters" asp-action="Details" asp-route-productionTitle="@prodUrlName" asp-route-name="@charUrlName">
+                                @cast.Character.Name
+                            </a>
+                            <span class="voiced-by">voiced by</span>
+                        </div>
+
+                        <div class="actor-name-side">
+                            <a class="btva-link" asp-controller="VoiceActors" asp-action="Details" asp-route-name="@actorUrlName">
+                                @cast.VoiceActor.FullName
+                            </a>
+                            <span class="lang-badge">Dil: @cast.LanguageCode</span>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <div style="grid-column: 1 / -1; color: var(--text-muted); font-style: italic;">
+                Bu yapım için henüz seslendirmen kadrosu eklenmemiş.
+            </div>
+        }
+    </div>
+
+</div>

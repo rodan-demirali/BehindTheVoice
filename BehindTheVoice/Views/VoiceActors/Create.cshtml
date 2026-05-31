@@ -1,0 +1,51 @@
+﻿@model BehindTheVoice.ViewModels.VoiceActorCreateViewModel
+
+@{
+    ViewData["Title"] = "Seslendirmen Ekle";
+}
+
+<div>
+    <h2>Yeni Seslendirmen Ekle</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" >
+
+
+        <div>
+            <label>Profil Fotoğrafı</label>
+            <input asp-for="ProfileImage" accept="image/*" id="File1" type="file" />
+
+        </div>
+
+        <div>
+            <label>Seslendirmen Adı - Soyadı</label>
+            <input asp-for="FullName" id="Text1" type="text" required />
+        </div>
+        <div>
+            <label>Açıklama</label>
+            <textarea asp-for="Description" id="TextArea1" rows="2" cols="20"></textarea>
+        </div>
+        <div>
+            <label>Doğum Tarihi</label>
+            <input asp-for="DateOfBirth" id="Text1" type="date" />
+        </div>
+        <div>
+            <label>Doğum Yeri</label>
+            <input asp-for="BirthPlace" id="Text1" type="text" />
+
+        </div>
+
+        <div>
+            <button type="submit" > Seslendirmeni Kaydet</button>
+
+            <a asp-action="Index" asp-controller="VoiceActors" >İptal Et ve Geri Dön</a>
+        </div>
+    
+    </form>
+
+
+
+
+
+    
+
+</div>

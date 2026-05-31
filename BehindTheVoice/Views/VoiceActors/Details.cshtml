@@ -1,0 +1,105 @@
+﻿@model BehindTheVoice.Models.VoiceActor
+
+@{
+    // Sayfanın sekme adını dinamik olarak aktörün adı yapıyoruz
+    ViewData["Title"] = Model.FullName + " - Behind The Voice";
+}
+
+<div class="page-layout">
+
+    <div class="sidebar">
+        <div class="box-container profile-box" style="border-top: 1px solid var(--border-color); border-radius: 3px;">
+
+            <img src="@Url.Content(Model.ImageUrl ?? "~/images/userphoto.png")" alt="@Model.FullName" class="profile-img" />
+            <h2 class="profile-name">@Model.FullName</h2>
+
+            <div class="profile-stats">
+                @if (Model.DateOfBirth.Year > 1)
+                {
+                    <div class="stat-row">
+                        <strong>Doğum Tarihi</strong>
+                        <span>@Model.DateOfBirth.ToString("d MMMM yyyy")</span>
+                    </div>
+                }
+                <div class="stat-row">
+                    <strong>Doğum Yeri</strong>
+                    <span>@Model.BirthPlace</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="box-container" style="border-top: 1px solid var(--border-color); border-radius: 3px;">
+            <p style="margin: 0; line-height: 1.6; font-size: 14px;">
+                @(string.IsNullOrEmpty(Model.Description) ? "Bu aktör için henüz bir bilgi girilmemiş." : Model.Description)
+            </p>
+        </div>
+
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Seslendirdiği Karakterler</span>
+
+            <select id="slctType" style="font-size: 12px; padding: 2px 5px; color: #111827; border: none; border-radius: 2px; outline: none;">
+                <option value="All">All Types</option>
+                <option value="movies">Movies</option>
+                <option value="characters">Characters</option>
+                <option value="tvshows">TV Shows</option>
+            </select>
+        </div>
+
+        <div class="box-container" style="padding: 0;">
+            <table class="roles-table">
+                <thead>
+                    <tr>
+                        <th>Karakter</th>
+                        <th>Yapım</th>
+                        @* <th>Dil</th> *@
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.VoiceCasts != null && Model.VoiceCasts.Any())
+                    {
+                        foreach (var cast in Model.VoiceCasts)
+                        {
+                            <tr>
+                                <td>
+                                    @{
+                                        var charImage = !string.IsNullOrEmpty(cast.CharacterAppearanceUrl)
+                                                                ? cast.CharacterAppearanceUrl
+                                                                : cast.Character.ImageUrl;
+
+                                        string sUrlName = cast.Character.Name.Replace(" ", "_");
+                                        string sTitleName = cast.Production.Title.Replace(" ", "_");
+                                    }
+
+                                    <a class="role-char-info" asp-controller="Characters" asp-action="Details" asp-route-productionTitle="@sTitleName" asp-route-name="@sUrlName">
+                                        <img src="@Url.Content(charImage ?? "~/images/userphoto.png")" alt="@cast.Character.Name" />
+                                        <strong>@cast.Character.Name</strong>
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <div style="font-size: 14px; font-weight: 600; color: #111827;">@cast.Production.Title</div>
+                                    <small style="color: var(--text-muted);">@cast.Production.Type</small>
+                                </td>
+
+                                @* <td>@cast.LanguageCode</td> *@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" style="padding: 20px; text-align: center; color: var(--text-muted); font-style: italic;">
+                                Bu aktör için henüz bir seslendirme kaydı girilmemiş.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
