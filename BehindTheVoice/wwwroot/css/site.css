@@ -1,5 +1,10 @@
+/* =========================================
+   GENEL BOOTSTRAP & HTML AYARLARI
+   ========================================= */
 html {
     font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,17 +13,12 @@ html {
     }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
     margin-bottom: 60px;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -30,101 +30,22 @@ body {
     text-align: start;
 }
 
-.recentlyUpdated {
-    width: 350px;
-    justify-content: center;
-}
-
-    .recentlyUpdated table, .recentlyUpdatedMovies table {
-        /*table-layout: fixed;*/
-        width: 100%;
-    }
-
-    .recentlyUpdated td, .recentlyUpdatedMovies td {
-        text-align: center;
-        vertical-align: top;
-        padding: 10px;
-        width: 25%;
-    }
-
-    .recentlyUpdated img {
-        width: 100px;
-        height: 110px;
-        display: block;
-        margin: 0 auto;
-    }
-
-    .recentlyUpdated label {
-        display: block;
-        max-width: 125px;
-        margin: 5px auto 0;
-        word-wrap: break-word;
-        text-align: center;
-    }
-
-.recentlyUpdatedMovies img {
-    width: 95px;
-    height: 133px;
-    display: block;
-    margin: 0 auto;
-}
-
-.recentlyUpdatedContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    width: 900px;
-}
-
-.recentlyUpdatedBox {
-    border: 1px solid #ccc;
-    padding: 15px;
-    min-height: 350px;
-}
-
-
-.btnDirect {
-    margin: 3px;
-    padding: 3px;
-    background-color: lightgray;
-    color: black;
-    border: 1px solid black;
-    text-decoration: none;
-}
-
-    .btnDirect:hover {
-        background-color: darkgray;
-    }
-
-.vaPageRecent {
-    width: 470px;
-}
-
-
-.vcImg img {
-    width: 95px;
-    height: 133px;
-    display: block;
-    margin: 0 auto;
-}
-
-
-
 /* =========================================
-   BEHIND THE VOICE - KLASIK DB TEMASI
+   BEHIND THE VOICE - KLASIK DB TEMASI (ROOT)
    ========================================= */
-
 :root {
-    --bg-main: #f3f4f6; /* Arka plan rengi */
-    --box-bg: #ffffff; /* Kutu arka planları */
-    --border-color: #d1d5db; /* Klasik, ince kenarlık rengi */
-    --header-bg: #1f2937; /* Başlıklar için tok bir koyu gri/lacivert */
+    --bg-main: #f3f4f6;
+    --box-bg: #ffffff;
+    --border-color: #d1d5db;
+    --header-bg: #1f2937;
     --header-text: #ffffff;
     --text-main: #111827;
     --text-muted: #6b7280;
     --link-color: #2563eb;
     --link-hover: #1d4ed8;
-    --accent-color: #f59e0b; /* Yıldız/Favori gibi alanlar için vurgu rengi */
+    --accent-color: #f59e0b;
+    --btva-red: #cc0000; /* Yeni eklendi: Ortak kırmızılar için */
+    --btva-green: #10b981; /* Yeni eklendi: Ortak yeşiller için */
 }
 
 body {
@@ -154,7 +75,6 @@ a {
     align-items: flex-start;
 }
 
-/* Ana İçerik ve Yan Menü Genişlikleri */
 .main-content {
     flex: 2;
 }
@@ -164,7 +84,6 @@ a {
     max-width: 350px;
 }
 
-/* --- Başlıklar ve Kutular (Klasik DB Görünümü) --- */
 .section-header {
     background-color: var(--header-bg);
     color: var(--header-text);
@@ -183,6 +102,78 @@ a {
     padding: 15px;
     border-radius: 0 0 3px 3px;
     margin-bottom: 25px;
+}
+
+/* =========================================
+   ORTAK GÖRSELLER VE TABLOLAR
+   ========================================= */
+.recentlyUpdated {
+    width: 350px;
+    justify-content: center;
+}
+
+    .recentlyUpdated table, .recentlyUpdatedMovies table {
+        width: 100%;
+    }
+
+    .recentlyUpdated td, .recentlyUpdatedMovies td {
+        text-align: center;
+        vertical-align: top;
+        padding: 10px;
+        width: 25%;
+    }
+
+    .recentlyUpdated img {
+        width: 100px;
+        height: 110px;
+        display: block;
+        margin: 0 auto;
+    }
+
+/* Ortak boyutlu resimler birleştirildi */
+.recentlyUpdatedMovies img, .vcImg img {
+    width: 95px;
+    height: 133px;
+    display: block;
+    margin: 0 auto;
+}
+
+.recentlyUpdated label {
+    display: block;
+    max-width: 125px;
+    margin: 5px auto 0;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.recentlyUpdatedContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    width: 900px;
+}
+
+.recentlyUpdatedBox {
+    border: 1px solid #ccc;
+    padding: 15px;
+    min-height: 350px;
+}
+
+.btnDirect {
+    margin: 3px;
+    padding: 3px;
+    background-color: lightgray;
+    color: black;
+    border: 1px solid black;
+    text-decoration: none;
+}
+
+    .btnDirect:hover {
+        background-color: darkgray;
+    }
+
+.vaPageRecent {
+    width: 470px;
 }
 
 /* --- Recently Updated Tabloları --- */
@@ -216,7 +207,7 @@ a {
         border: 1px solid var(--border-color);
         border-radius: 2px;
         margin-bottom: 8px;
-        box-shadow: 2px 2px 4px rgba(0,0,0,0.05); /* Çok hafif, doğal bir gölge */
+        box-shadow: 2px 2px 4px rgba(0,0,0,0.05);
     }
 
     .grid-item-link label {
@@ -302,11 +293,9 @@ a {
 .stat-row {
     display: flex;
     align-items: center;
-    /*justify-content: flex-end;*/
     gap: 5px;
 }
 
-/* --- Ana Sayfa Container --- */
 .home-recently-updated {
     display: flex;
     gap: 20px;
@@ -321,14 +310,12 @@ a {
 /* =========================================
    LAYOUT: HEADER & NAVIGATION
    ========================================= */
-
 .site-header {
-    background-color: var(--header-bg); /* #1f2937 - Tok koyu arka plan */
-    border-bottom: 3px solid var(--accent-color); /* #f59e0b - Klasik veritabanı sitelerindeki renkli vurgu şeridi */
+    background-color: var(--header-bg);
+    border-bottom: 3px solid var(--accent-color);
     color: var(--header-text);
 }
 
-/* Üst Kısım: Logo ve Arama */
 .top-bar {
     max-width: 1200px;
     margin: 0 auto;
@@ -352,17 +339,15 @@ a {
         text-decoration: none;
     }
 
-/* Arama ve Buton Grubu */
 .search-container {
     display: flex;
     gap: 10px;
     align-items: center;
 }
 
-    .search-container select,
-    .search-container input[type="text"] {
+    .search-container select, .search-container input[type="text"] {
         padding: 6px 10px;
-        border: 1px solid #4b5563; /* Header içinde daha uyumlu bir kenarlık */
+        border: 1px solid #4b5563;
         border-radius: 2px;
         font-size: 13px;
         color: #111827;
@@ -370,7 +355,6 @@ a {
         outline: none;
     }
 
-/* Ekle ve Search Butonları */
 .btn-action {
     background-color: var(--accent-color);
     color: #fff !important;
@@ -385,13 +369,12 @@ a {
 }
 
     .btn-action:hover {
-        background-color: #d97706; /* Vurgu renginin biraz daha koyusu */
+        background-color: #d97706;
         text-decoration: none;
     }
 
-/* Alt Navigasyon Çubuğu */
 .main-nav-wrapper {
-    background-color: #111827; /* Header ana renginden biraz daha koyu, derinlik katar */
+    background-color: #111827;
 }
 
 .main-nav {
@@ -401,9 +384,7 @@ a {
     padding: 0 20px;
 }
 
-    /* Linkler ve senin kullandığın <input type="button"> için ortak stil */
-    .main-nav a,
-    .main-nav input[type="button"] {
+    .main-nav a, .main-nav input[type="button"] {
         background: transparent;
         color: #d1d5db;
         border: none;
@@ -415,35 +396,25 @@ a {
         transition: all 0.2s;
     }
 
-        .main-nav a:hover,
-        .main-nav input[type="button"]:hover {
+        .main-nav a:hover, .main-nav input[type="button"]:hover {
             background-color: var(--header-bg);
             color: #fff;
         }
 
-/* Bootstrap Container'ını bizim 1200px sınırımızla uyumlu hale getirelim */
 .container {
     max-width: 1200px !important;
     margin-top: 20px;
 }
 
-
-
-/* Aktif Menü Elemanı */
-.main-nav a.active-nav,
-.main-nav input[type="button"].active-nav {
+.main-nav a.active-nav, .main-nav input[type="button"].active-nav {
     background-color: var(--header-bg);
     color: #ffffff;
-    /* Alt kısmına vurgu rengiyle kalın bir şerit çeker, düzeni bozmaz */
     box-shadow: inset 0 -4px 0 var(--accent-color);
 }
-
 
 /* =========================================
    DETAILS PAGE (PROFILE & ROLES)
    ========================================= */
-
-/* Sol Menü Profil Alanı */
 .profile-box {
     text-align: center;
 }
@@ -484,7 +455,6 @@ a {
         margin-bottom: 2px;
     }
 
-/* Sağ Alan - Roller Tablosu */
 .roles-table {
     width: 100%;
     border-collapse: collapse;
@@ -533,17 +503,14 @@ a {
         text-decoration: underline;
     }
 
-
 /* =========================================
    PRODUCTION DETAILS (BTVA STYLE DUAL CARDS)
    ========================================= */
-
 .prod-container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Üst Bilgi Kutusu */
 .prod-header-box {
     display: flex;
     gap: 30px;
@@ -568,7 +535,7 @@ a {
 
 .prod-title {
     font-size: 26px;
-    color: #cc0000; /* BTVA Kırmızısı */
+    color: var(--btva-red);
     font-weight: bold;
     margin: 0 0 5px 0;
 }
@@ -603,7 +570,6 @@ a {
     color: var(--text-muted);
 }
 
-/* Sekmeler (Tabs) - Sitenin header'ı ile uyumlu hale getirildi */
 .prod-tabs {
     background-color: var(--header-bg);
     color: #9ca3af;
@@ -617,13 +583,12 @@ a {
 }
 
     .prod-tabs span {
-        color: var(--accent-color); /* Sarı/Turuncu vurgu rengimiz */
+        color: var(--accent-color);
     }
 
-/* Kırmızı Bölüm Başlığı */
 .prod-section-title {
-    color: #cc0000;
-    border-bottom: 2px solid #cc0000;
+    color: var(--btva-red);
+    border-bottom: 2px solid var(--btva-red);
     padding-bottom: 5px;
     text-transform: uppercase;
     font-size: 18px;
@@ -631,7 +596,6 @@ a {
     font-weight: bold;
 }
 
-/* === İKİLİ KART IZGARASI === */
 .cast-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -650,7 +614,6 @@ a {
     box-shadow: 2px 2px 4px rgba(0,0,0,0.02);
 }
 
-/* Resimlerin yan yana durduğu satır */
 .card-images {
     display: flex;
     width: 100%;
@@ -675,7 +638,6 @@ a {
     border-right: 1px solid var(--border-color);
 }
 
-/* İsimlerin yan yana durduğu satır */
 .card-names {
     display: flex;
     width: 100%;
@@ -716,12 +678,11 @@ a {
     font-weight: 600;
 }
 
-/* Yeşil Onay İşareti */
 .verified-check {
     position: absolute;
     bottom: 4px;
     right: 4px;
-    background: #10b981;
+    background: var(--btva-green);
     color: white;
     border-radius: 50%;
     width: 18px;
@@ -734,17 +695,14 @@ a {
     box-shadow: 0 0 3px rgba(0,0,0,0.3);
 }
 
-
 /* =========================================
    CHARACTER DETAILS PAGE
    ========================================= */
-
 .char-container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* Üst Bilgi Kutusu */
 .char-header-box {
     display: flex;
     gap: 25px;
@@ -768,7 +726,7 @@ a {
 
 .char-title {
     font-size: 26px;
-    color: #cc0000; /* BTVA Kırmızısı */
+    color: var(--btva-red);
     font-weight: bold;
     margin: 0 0 15px 0;
     text-transform: uppercase;
@@ -785,7 +743,6 @@ a {
     border-radius: 0 3px 3px 0;
 }
 
-/* Bölüm Başlıkları */
 .char-section-title {
     color: var(--header-bg);
     border-bottom: 2px solid var(--header-bg);
@@ -796,7 +753,6 @@ a {
     font-weight: bold;
 }
 
-/* Alt Liste Izgaraları (Grid) */
 .char-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -834,7 +790,6 @@ a {
         object-fit: cover;
     }
 
-/* Kart Üzerindeki Rozetler (Badge) */
 .badge-lang {
     position: absolute;
     bottom: 5px;
@@ -874,11 +829,9 @@ a {
         text-decoration: underline;
     }
 
-
 /* =========================================
    ADMIN DASHBOARD
    ========================================= */
-
 .admin-container {
     max-width: 900px;
     margin: 0 auto;
@@ -896,7 +849,6 @@ a {
     flex-direction: column;
     background-color: var(--box-bg);
     border: 1px solid var(--border-color);
-    /* Sol tarafa dosya dolabı hissi veren kalın bir çizgi */
     border-left: 4px solid var(--header-bg);
     padding: 15px;
     border-radius: 3px;
@@ -907,8 +859,7 @@ a {
 
     .admin-action-card:hover {
         background-color: #f8fafc;
-        /*border-left-color: var(--accent-color);*/ /* Üzerine gelince turuncu/sarı vurgu rengimiz olur */
-        transform: translateX(3px); /* Tıklama hissiyatı için sağa hafif kayar */
+        transform: translateX(3px);
     }
 
     .admin-action-card strong {
@@ -923,11 +874,9 @@ a {
         line-height: 1.4;
     }
 
-
 /* =========================================
    FORMS (ADMIN & CREATE PAGES)
    ========================================= */
-
 .form-container {
     max-width: 900px;
     margin: 0 auto;
@@ -941,7 +890,6 @@ a {
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Izgara (Grid) Yapıları */
 .form-row-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -970,7 +918,6 @@ a {
     letter-spacing: 0.5px;
 }
 
-/* Input ve Select Tasarımı */
 .form-control {
     padding: 8px 10px;
     border: 1px solid var(--border-color);
@@ -986,7 +933,6 @@ a {
         border-color: var(--link-color);
     }
 
-/* Dosya Yükleme Kutusu */
 .form-file-box {
     background-color: var(--bg-main);
     border: 1px solid var(--border-color);
@@ -1002,7 +948,6 @@ a {
         line-height: 1.4;
     }
 
-/* Butonlar */
 .form-actions {
     display: flex;
     align-items: center;
@@ -1013,7 +958,7 @@ a {
 }
 
 .btn-submit {
-    background-color: #10b981; /* Klasik onay yeşili, ancak gölgesiz ve mat */
+    background-color: var(--btva-green);
     color: #fff;
     border: none;
     padding: 8px 20px;
